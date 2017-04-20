@@ -1,44 +1,15 @@
 <idea-plugin version="2">
-  <id>com.przemyslawj.mockito.generator</id>
+  <id>ru.yandex-team.imozerov</id>
   <name>Mockito code generator</name>
-  <version>1.3</version>
-  <vendor email="jarzeb5@gmail.com">przemyslawj</vendor>
+  <version>0.1</version>
+  <vendor email="imozerov@yandex-team.ru">Ilya Mozerov</vendor>
 
   <description><![CDATA[
       The plugin generates boilerplate Mockito code that usually needs to be added manually to unit tests.
-
-      <p>
-      Auto-generated are:
-      <ul>
-          <li><code>RunWith(MockitoJUnitRunner.class)</code> annotation for the class</li>
-          <li>Mocked fields for each non-static object declared in the test subject</li>
-          <li>Field for the test subject with <code>@InjectMocks</code> annotation</li>
-          <li>static imports for useful mockito functions like <code>when</code>, <code>verify</code>
-      </ul>
-      </p>
-
-      <p>
-        To generate the Mockito code with the plugin hit <code>ctrl shift M</code> or use a choose the action from
-      "Generate Action" context menu.
-      </p>
     ]]></description>
-
-  <change-notes><![CDATA[
-      <ul>
-      <li>Added generation of mocked fields for objects declared in a parent class of the tested class</li>
-      <li>Show error message when plugin used without Mockito or JUnit in the dependencies</li>
-      </ul>
-    ]]>
-  </change-notes>
 
   <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Build+Number+Ranges for description -->
   <idea-version since-build="131"/>
-
-  <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
-       on how to target different products -->
-  <!-- uncomment to enable plugin in all products
-  <depends>com.intellij.modules.lang</depends>
-  -->
 
   <extensions defaultExtensionNs="com.intellij">
     <!-- Add your extensions here -->

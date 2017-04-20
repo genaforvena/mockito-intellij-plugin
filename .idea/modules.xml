@@ -3,8 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/mockito-intellij-plugin.iml" filepath="$PROJECT_DIR$/mockito-intellij-plugin.iml" group="mockito-intellij-plugin" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mockito-intellij-plugin_main.iml" filepath="$PROJECT_DIR$/.idea/modules/mockito-intellij-plugin_main.iml" group="mockito-intellij-plugin" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mockito-intellij-plugin_test.iml" filepath="$PROJECT_DIR$/.idea/modules/mockito-intellij-plugin_test.iml" group="mockito-intellij-plugin" />
     </modules>
   </component>
 </project>
