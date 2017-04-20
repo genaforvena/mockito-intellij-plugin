@@ -6,18 +6,13 @@ import com.intellij.psi.codeStyle.JavaCodeStyleManager;
 import com.intellij.psi.codeStyle.SuggestedNameInfo;
 import com.intellij.psi.codeStyle.VariableKind;
 import com.intellij.psi.search.GlobalSearchScope;
-import com.intellij.psi.util.PsiMethodUtil;
-import com.intellij.psi.util.PsiUtil;
-import org.apache.http.util.TextUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.mockito.plugin.util.AnnotationUtil;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.StringJoiner;
 
 /**
  * Inserts code with declaration of fields that can be auto-generated in a Mockito test:
@@ -71,7 +66,7 @@ public class FieldsCodeInjector implements CodeInjector {
             return;
         }
 
-        insertMockedFields(underTestQualifiedClassName, psiClass, existingFieldTypeNames);
+        insertMockedFields(underTestQualifiedClassName, psiClass);
 
         insertUnderTestField(psiClass, existingFieldTypeNames, underTestQualifiedClassName);
     }
@@ -84,8 +79,7 @@ public class FieldsCodeInjector implements CodeInjector {
         }
     }
 
-    private void insertMockedFields(String underTestQualifiedClassName, PsiClass psiClass,
-                                    Set<String> existingFieldTypeNames) {
+    private void insertMockedFields(String underTestQualifiedClassName, PsiClass psiClass) {
         PsiClass underTestPsiClass = javaPsiFacade.findClass(
                 underTestQualifiedClassName, GlobalSearchScope.allScope(project));
         if (underTestPsiClass == null) {
@@ -93,7 +87,7 @@ public class FieldsCodeInjector implements CodeInjector {
         }
         boolean addedMocks = false;
         for (PsiMethod psiMethod : underTestPsiClass.getConstructors()) {
-            if (AnnotationUtil.isAnnotated(psiMethod, "Inject", false)) {
+//            if (hasInjectAnnotation(psiMethod)) {
                 PsiParameter[] parameters = psiMethod.getParameterList().getParameters();
                 for (PsiParameter parameter : parameters) {
                     PsiType type = parameter.getTypeElement().getType();
@@ -103,11 +97,23 @@ public class FieldsCodeInjector implements CodeInjector {
 
                 insertSetUp(psiClass, psiMethod);
                 break;
-            }
+//            }
         }
         if (addedMocks) {
             importOrganizer.addClassImport(psiJavaFile, MOCK_ANNOTATION_QUALIFIED_NAME);
         }
+    }
+
+    private boolean hasInjectAnnotation(PsiMethod psiMethod) {
+        PsiModifierList modifierList = psiMethod.getModifierList();
+        if (modifierList == null) {
+            return false;
+        }
+        PsiAnnotation annotation = modifierList.findAnnotation("Inject");
+        if (annotation != null) {
+            return true;
+        }
+        return false;
     }
 
     private void insertSetUp(PsiClass psiClass, PsiMethod psiMethod) {
