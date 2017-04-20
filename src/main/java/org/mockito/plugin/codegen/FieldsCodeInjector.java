@@ -1,6 +1,5 @@
 package org.mockito.plugin.codegen;
 
-import com.intellij.codeInsight.AnnotationUtil;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.intellij.psi.codeStyle.JavaCodeStyleManager;
@@ -12,6 +11,7 @@ import com.intellij.psi.util.PsiUtil;
 import org.apache.http.util.TextUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.mockito.plugin.util.AnnotationUtil;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -162,9 +162,6 @@ public class FieldsCodeInjector implements CodeInjector {
     private void insertMockedField(PsiClass psiClass, PsiType psiType) {
         String newFieldName = suggestFieldName(psiType);
 
-        newFieldName = Character.toLowerCase(newFieldName.charAt(0)) +
-                newFieldName.substring(1, newFieldName.length());
-
         insertNewField(psiClass, psiType, newFieldName, MOCK_ANNOTATION_SHORT_NAME);
     }
 
@@ -180,8 +177,7 @@ public class FieldsCodeInjector implements CodeInjector {
     @NotNull
     private String suggestFieldName(PsiType psiType) {
         SuggestedNameInfo info = codeStyleManager.suggestVariableName(VariableKind.FIELD, null, null, psiType);
-        String name = info.names[0];
-        return "m" + name.substring(0, 1).toUpperCase() + name.substring(1);
+        return info.names[0];
     }
 
     private String getUnderTestQualifiedClassName(PsiClass psiClass) {
