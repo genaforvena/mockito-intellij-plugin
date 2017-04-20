@@ -1,31 +1,26 @@
+import org.junit.Before;
 import org.junit.runner.RunWith;
-import org.junit.Test;
-import org.mockito.InjectMocks;
+import org.junit.runners.JUnit4;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
+import java.util.List;
+import java.util.Random;
 
-@RunWith(MockitoJUnitRunner.class)
-class ClassWithFieldsAndMethodsTest {
+import static org.mockito.MockitoAnnotations.initMocks;
 
-    private static final int VAL1 = 1;
-
-    private String testValue = "value";
+@RunWith(JUnit4.class)
+class FooTest {
     @Mock
-    private Random random;
+    private Random mRandom;
     @Mock
-    private List<String> stringList;
-    @InjectMocks
-    private ClassWithFieldsAndMethods underTest;
+    private List mList;
 
-    @Test
-    public void testFoo() throws Exception {
-        assertEquals(0, getBar());
-    }
+    private Foo mUnderTest;
 
-    private int getBar() {
-        return 0;
+    @Before
+    public void setUp() {
+        initMocks(this);
+
+        mUnderTest = new Foo(mRandom, mList);
     }
 }

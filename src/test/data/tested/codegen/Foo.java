@@ -1,14 +1,14 @@
-package org.mockito.plugin.codegen.te;
+package org.mockito.plugin.codegen;
 
 import javax.inject.Inject;
-import java.sql.Array;
 import java.util.List;
+import java.util.Random;
 
 public class Foo {
     private Math baz;
 
     @Inject
-    public Foo(Array array, List list) {
+    public Foo(Random random, List list) {
 
     }
 }
