@@ -9,11 +9,15 @@ import com.intellij.psi.codeStyle.VariableKind;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiMethodUtil;
 import com.intellij.psi.util.PsiUtil;
+import org.apache.http.util.TextUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.StringJoiner;
 
 /**
  * Inserts code with declaration of fields that can be auto-generated in a Mockito test:
@@ -116,9 +120,23 @@ public class FieldsCodeInjector implements CodeInjector {
                         "\n" +
                         "}\n", null);
 
+        PsiParameter[] parameters = psiMethod.getParameterList().getParameters();
+        List<String> arguments = new ArrayList<>();
+        for (PsiParameter parameter : parameters) {
+            PsiType type = parameter.getTypeElement().getType();
+            arguments.add(suggestFieldName(type));
+        }
 
-
-//        methodFromText.add(createExpression);
+        String delim = "";
+        StringBuilder sb = new StringBuilder();
+        for (String i : arguments) {
+            sb.append(delim).append(i);
+            delim = ",";
+        }
+        String argumentsString = sb.toString();
+        methodFromText.getBody().add(elementFactory.createStatementFromText("mUnderTest = new Foo(" +
+                "" + argumentsString +
+                ");", null));
 
         psiClass.add(methodFromText);
     }
