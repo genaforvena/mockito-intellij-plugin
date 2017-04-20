@@ -9,11 +9,11 @@ import static org.mockito.Mockito.*;
 
 @RunWith(JUnit4.class)
 class FooTest {
+
     @Mock
     private Random mRandom;
     @Mock
     private List mList;
-
     private Foo mUnderTest;
 
     @Before

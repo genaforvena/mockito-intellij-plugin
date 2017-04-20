@@ -8,6 +8,7 @@ import com.intellij.psi.codeStyle.SuggestedNameInfo;
 import com.intellij.psi.codeStyle.VariableKind;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiMethodUtil;
+import com.intellij.psi.util.PsiUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -96,7 +97,7 @@ public class FieldsCodeInjector implements CodeInjector {
                     addedMocks = true;
                 }
 
-
+                insertSetUp(psiClass, psiMethod);
                 break;
             }
         }
@@ -105,8 +106,21 @@ public class FieldsCodeInjector implements CodeInjector {
         }
     }
 
-    private void insertSetUp() {
+    private void insertSetUp(PsiClass psiClass, PsiMethod psiMethod) {
+        PsiElementFactory elementFactory = PsiElementFactory.SERVICE.getInstance(project);
 
+        PsiMethod methodFromText = elementFactory.createMethodFromText(
+                "@Before\n" +
+                        "public void setUp() {\n" +
+                        "initMocks(this);\n" +
+                        "\n" +
+                        "}\n", null);
+
+
+
+//        methodFromText.add(createExpression);
+
+        psiClass.add(methodFromText);
     }
 
     /**
