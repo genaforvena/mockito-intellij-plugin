@@ -1,5 +1,3 @@
-package org.mockito.plugin.codegen;
-
 import javax.inject.Inject;
 import java.util.List;
 import java.util.Random;

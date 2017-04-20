@@ -1,12 +1,11 @@
-import org.junit.Before;
 import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.List;
-import java.util.Random;
-
-import static org.mockito.MockitoAnnotations.initMocks;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.*;
 
 @RunWith(JUnit4.class)
 class FooTest {

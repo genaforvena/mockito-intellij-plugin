@@ -12,7 +12,7 @@ import com.intellij.psi.PsiModifierList;
  */
 public class RunnerCodeInjector implements CodeInjector {
 
-    public static final String MOCKITO_RUNNER_QUALIFIED_CLASS_NAME = "org.mockito.runners.MockitoJUnitRunner";
+    public static final String JUNIT4_RUNNER_QUALIFIED_CLASS_NAME = "org.junit.runners.JUnit4;";
     public static final String RUN_WITH_SHORT_CLASS_NAME = "RunWith";
     public static final String RUN_WITH_QUALIFIED_CLASS_NAME = "org.junit.runner." + RUN_WITH_SHORT_CLASS_NAME;
 
@@ -28,8 +28,8 @@ public class RunnerCodeInjector implements CodeInjector {
         PsiClass psiClass = MockitoPluginUtils.getUnitTestClass(psiJavaFile);
         PsiModifierList modifierList = psiClass.getModifierList();
         if (!containsRunnerAnnotation(modifierList)) {
-            modifierList.addAnnotation("RunWith(MockitoJUnitRunner.class)");
-            importOrganizer.addClassImport(psiJavaFile, MOCKITO_RUNNER_QUALIFIED_CLASS_NAME);
+            modifierList.addAnnotation("RunWith(JUnit4.class)");
+//            importOrganizer.addClassImport(psiJavaFile, JUNIT4_RUNNER_QUALIFIED_CLASS_NAME);
             importOrganizer.addClassImport(psiJavaFile, RUN_WITH_QUALIFIED_CLASS_NAME);
         }
     }
