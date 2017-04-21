@@ -140,7 +140,9 @@ public class FieldsCodeInjector implements CodeInjector {
             delim = ",";
         }
         String argumentsString = sb.toString();
-        methodFromText.getBody().add(elementFactory.createStatementFromText("mUnderTest = new Foo(" +
+        methodFromText.getBody().add(elementFactory.createStatementFromText("mUnderTest = new " +
+                psiMethod.getName() +
+                "(" +
                 "" + argumentsString +
                 ");", null));
 
